@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">GithubActionsApp</string>
+    <string name="app_name_debug">GithubActionsApp - Debug</string>
+    <string name="app_name_release">GithubActionsApp</string>
 </resources>
