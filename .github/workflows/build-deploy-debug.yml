@@ -24,6 +24,7 @@ jobs:
 
       - name: Sign apk
         uses: r0adkll/sign-android-release@v1
+        id: sign
         with:
           releaseDirectory: app/build/outputs/apk/debug
           signingKeyBase64: ${{ secrets.SIGNING_KEYSTORE }}
@@ -34,9 +35,9 @@ jobs:
       - name: Upload artifact to App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{secrets.FIREBASE_APP_ID_DEBUG}}
-          token: ${{secrets.FIREBASE_TOKEN}}
+          appId: ${{ secrets.FIREBASE_APP_ID_DEBUG }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
           groups: github-actions-group
-          file: app/build/outputs/apk/debug/app-debug.apk
+          file: ${{ steps.sign.outputs.signedReleaseFile }}
           debug: true
-          releaseNotes: ${{github.event.head_commit.message}}
+          releaseNotes: ${{ github.event.head_commit.message }}
